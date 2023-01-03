@@ -16,6 +16,21 @@ class ApplicationController < Sinatra::Base
     artists.to_json
   end
 
+  get"/artists/:id" do
+    artist = Artist.find(params[:id])
+    artist.to_json
+  end
+
+  get "/artists/:id/songs" do
+    songs = Song.where(artist_id: params[:id])
+    songs.to_json
+  end
+
+  get "/artists/:id/covers" do
+    covers = Cover.where(artist_id: params[:id])
+    covers.to_json
+  end
+
   post "/artists" do 
     new_artist = Artist.create(
       name: params[:name]
@@ -26,6 +41,20 @@ class ApplicationController < Sinatra::Base
   get "/songs" do
     songs = Song.all
     songs.to_json
+  end
+
+  get "/songs/:id" do
+    # song = Song.find(params[:id]).artists_and_coverers
+    song = Song.find(params[:id])
+    # song.artist = Artist.find(song.artist_id)
+    song.to_json(include: :covers)
+  end
+
+  get "/songs/:id/covers" do
+    song = Song.find(params[:id])
+    covers = Cover.where(song_id: params[:id])
+    puts song.title
+    covers.to_json
   end
 
   post "/songs" do
@@ -50,4 +79,6 @@ class ApplicationController < Sinatra::Base
     )
     new_cover.to_json
   end
+
+
 end
