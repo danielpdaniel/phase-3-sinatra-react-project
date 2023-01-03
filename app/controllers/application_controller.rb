@@ -47,16 +47,15 @@ class ApplicationController < Sinatra::Base
     # song = Song.find(params[:id]).artists_and_coverers
     song = Song.find(params[:id])
     # song.artist = Artist.find(song.artist_id)
-    song.to_json(include: :artist
-    # , include: {covers: {include: [:artist]}}
-    )
+    # song.to_json(include: :artist, include: {covers: {include: [:artist]}})
+    song.to_json(include: [:artist, covers: {include: [:artist]}])
   end
 
   get "/songs/:id/covers" do
     song = Song.find(params[:id])
     # covers = Cover.where(song_id: params[:id])
     covers = song.covers
-    covers.to_json
+    covers.to_json(include: :artist)
   end
 
   post "/songs" do
