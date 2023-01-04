@@ -81,5 +81,11 @@ class ApplicationController < Sinatra::Base
     new_cover.to_json
   end
 
+  delete "/covers/:id" do
+    cover_to_delete = Cover.find(params[:id])
+    cover_to_delete.destroy
+    cover_to_delete.to_json
+  end
+
 
 end
