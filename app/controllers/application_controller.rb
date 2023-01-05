@@ -81,6 +81,15 @@ class ApplicationController < Sinatra::Base
     new_cover.to_json(include: [:artist])
   end
 
+  patch "/covers/:id" do
+    cover = Cover.find(params[:id])
+    cover.update(
+      artist_id: params[:artist_id],
+      performance_link: params[:performance_link]
+    )
+    cover.to_json
+  end
+
   delete "/covers/:id" do
     cover_to_delete = Cover.find(params[:id])
     cover_to_delete.destroy
