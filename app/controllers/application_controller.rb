@@ -87,7 +87,7 @@ class ApplicationController < Sinatra::Base
       artist_id: params[:artist_id],
       performance_link: params[:performance_link]
     )
-    cover.to_json
+    cover.to_json(include: [:artist])
   end
 
   delete "/covers/:id" do
