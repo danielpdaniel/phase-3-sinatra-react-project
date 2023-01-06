@@ -10,7 +10,7 @@ class ApplicationController < Sinatra::Base
 
   get "/artists" do
     artists = Artist.all
-    artists.to_json(include: [:songs, :covers])
+    artists.to_json(include: [:songs, covers: {include: [:song]}])
   end
 
   get"/artists/:id" do
