@@ -32,7 +32,7 @@ class ApplicationController < Sinatra::Base
     new_artist = Artist.create(
       name: params[:name]
     )
-    new_artist.to_json
+    new_artist.to_json(include: [:songs, covers: {include: [:song]}])
   end
 
   get "/songs" do
