@@ -6,4 +6,9 @@ class Artist < ActiveRecord::Base
     def self.sort_by_name
         Artist.order(name: :asc)
     end
+
+    def self.artist_id_by_name name
+        artist = Artist.find_by(name: name)
+        artist.id
+    end
 end

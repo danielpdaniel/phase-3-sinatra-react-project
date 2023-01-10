@@ -12,4 +12,9 @@ class Song < ActiveRecord::Base
         end
         puts "song: #{self.title}, og artist: #{artist}, covering artists: #{coverers}"
     end
+
+    def self.song_id_by_title title
+        selected_song = Song.find_by(title: title)
+        selected_song.id
+    end
 end
