@@ -72,6 +72,15 @@ class ApplicationController < Sinatra::Base
     covers.to_json(include: :artist)
   end
 
+  patch "/songs/:id" do
+    song = Song.find(params[:id])
+    song.update(
+      title: params[:title],
+      performance_link: params[:performance_link]
+    )
+    song.to_json(include: [:artist, covers:{include: [:artist]}])
+  end
+
   post "/songs" do
     new_song = Song.create(
       title: params[:title],
