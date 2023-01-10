@@ -9,7 +9,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/artists" do
-    artists = Artist.all.order(name: :asc)
+    artists = Artist.all.sort_by_name
     artists.to_json(include: [:songs, covers: {include: [:song]}])
   end
 
