@@ -90,6 +90,12 @@ class ApplicationController < Sinatra::Base
     new_song.to_json(include: [:artist])
   end
 
+  delete "/songs/:id" do
+    song_to_delete = Song.find(params[:id])
+    song_to_delete.destroy
+    song_to_delete.to_json
+  end
+
   get "/covers" do
     covers = Cover.all
     covers.to_json
