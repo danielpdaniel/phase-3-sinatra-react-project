@@ -7,13 +7,13 @@ class ApplicationController < Sinatra::Base
   
   get "/test" do
     tests = TestData.all
-    tests.to_json(methods: :say_test)
+    tests.to_json(methods: [:say_test])
   end
 
   get "/artists" do
     artists = Artist.all.sort_by_name
     
-    artists.to_json(methods: :printId, include: [:songs, covers: {include: [:song]}])
+    artists.to_json(include: [:songs, covers: {include: [:song]}])
     
   end
 
@@ -86,7 +86,8 @@ class ApplicationController < Sinatra::Base
   post "/songs" do
     new_song = Song.create(
       title: params[:title],
-      artist_id: params[:artist_id]
+      artist_id: params[:artist_id],
+      performance_link: params[:performance_link]
     )
 
     new_song.to_json(include: [:artist])

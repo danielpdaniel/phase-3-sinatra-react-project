@@ -12,4 +12,8 @@ class Artist < ActiveRecord::Base
         artist.id
     end
 
+    def artists_songs_alphabetically
+        self.songs.order(title: asc)
+    end
+
 end
