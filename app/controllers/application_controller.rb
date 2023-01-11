@@ -7,12 +7,14 @@ class ApplicationController < Sinatra::Base
   
   get "/test" do
     tests = TestData.all
-    tests.to_json
+    tests.to_json(methods: :say_test)
   end
 
   get "/artists" do
     artists = Artist.all.sort_by_name
-    artists.to_json(include: [:songs, covers: {include: [:song]}])
+    
+    artists.to_json(methods: :printId, include: [:songs, covers: {include: [:song]}])
+    
   end
 
   get"/artists/:id" do

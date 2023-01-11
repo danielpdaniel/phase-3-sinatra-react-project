@@ -11,4 +11,5 @@ class Artist < ActiveRecord::Base
         artist = Artist.find_by(name: name)
         artist.id
     end
+
 end
