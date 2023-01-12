@@ -13,7 +13,17 @@ class Artist < ActiveRecord::Base
     end
 
     def artists_songs_alphabetically
-        self.songs.order(title: asc)
+        self.songs.order(title: :asc)
+    end
+
+    def self.artists_songs
+        songs_hash_arr = []
+        self.all.each do |artist|
+            artist.songs.each do |song|
+                songs_hash_arr.push({title: song.title})
+            end
+        end
+        songs_hash_arr
     end
 
 end

@@ -14,8 +14,8 @@ Artist.create(name: "Orville Peck")
 
 
 puts "seeding songs..."
-Song.create(title: "New York, New York", artist_id: Artist.artist_id_by_name("Frank Sinatra"))
-Song.create(title: "Born This Way", artist_id: Artist.artist_id_by_name("Lady Gaga"))
+Song.create(title: "New York, New York", artist_id: Artist.artist_id_by_name("Frank Sinatra"), performance_link:"https://www.youtube.com/watch?v=Y2rDb4Ur2dw")
+Song.create(title: "Born This Way", artist_id: Artist.artist_id_by_name("Lady Gaga"), performance_link:"https://www.youtube.com/watch?v=xl0N7JM3wZk")
 
 puts "seeding covers..."
 Cover.create(song_id: Song.song_id_by_title("New York, New York"), artist_id: Artist.artist_id_by_name("Lady Gaga"), performance_link: "https://www.youtube.com/watch?v=hpiw3cDWmvc")
