@@ -10,14 +10,14 @@ bundle install
 ```
 in the project's directory to install the necessary gems. Next, run:
 ```
-bundle exec rake server
-``` 
-to start a rake server to host the app's backend on a local port. Once the server is up and running, run:
-```
 bundle exec rake db:migrate
 bundle exec rake db:seed
 ```
-to handle the necessary migrations and build the database tables and then seed those tables with some starter data.
+to run all the migrations that are going to build out the database tables and then fill those table with some seed data from the seeds.rb file. next, run:
+```
+bundle exec rake server
+``` 
+to start a rake server to host the app's backend on a local port. Once the server is up and running you should be ready to go! the [frontend](https://github.com/danielpdaniel/phase-3-sinatra-react-project-frontend) should be all set to make requests to the database and display the data in the browser once you've set that up as well, or you could make fetch requests using something like [postman](https://www.postman.com/)
 
 ## Usage
 
