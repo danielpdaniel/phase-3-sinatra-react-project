@@ -13,8 +13,9 @@ class ApplicationController < Sinatra::Base
   get "/artists" do
     artists = Artist.all.sort_by_name
     
-    artists.to_json( include: [:songs, covers: {include: [:song]}])
-    
+    # artists.to_json( include: [:songs, covers: {include: [:song]}])
+    artists.to_json( include: [songs: {include: [:artist, covers:{include: [:artist]}]}, covers: {include: [:song]}])
+
   end
 
   get"/artists/:id" do
@@ -37,6 +38,7 @@ class ApplicationController < Sinatra::Base
       name: params[:name]
     )
     new_artist.to_json(include: [:songs, covers: {include: [:song]}])
+    
   end
 
   patch "/artists/:id" do 
