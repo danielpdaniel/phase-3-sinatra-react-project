@@ -1,6 +1,6 @@
-# Phase 3 Sinatra React Project Front End
+# Cover Lover = Phase 3 Sinatra React Project Front End
 
-This is the backend for my Phase 3 Project. The project is a single page application centered on musical artists, their songs, and the covers they've done of other artist's songs.
+This is the backend for my Phase 3 Project, Cover Lover! The project is a single page application centered on musical artists, their songs, and the covers they've done of other artist's songs.
 
 ## Installation
 
