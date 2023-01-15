@@ -116,7 +116,8 @@ class ApplicationController < Sinatra::Base
       artist_id: params[:artist_id],
       performance_link: params[:performance_link]
     )
-    new_cover.to_json(include: [:artist])
+    # new_cover.to_json(include: [:artist])
+    new_cover.to_json(include: {artist: {include: {songs: {include: [:artist]}, covers: {include: {song: {include: [:artist]}}}}}})
   end
 
   patch "/covers/:id" do
@@ -132,7 +133,8 @@ class ApplicationController < Sinatra::Base
     cover_to_delete = Cover.find(params[:id])
     cover_to_delete.destroy
     
-    cover_to_delete.to_json(include: [:artist])
+    # cover_to_delete.to_json(include: [:artist])
+    cover_to_delete.to_json(include: {artist: {include: {songs: {include: [:artist]}, covers: {include: {song: {include: [:artist]}}}}}})
   end
 
 
