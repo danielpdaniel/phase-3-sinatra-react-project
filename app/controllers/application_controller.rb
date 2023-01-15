@@ -13,7 +13,6 @@ class ApplicationController < Sinatra::Base
   get "/artists" do
     artists = Artist.all.sort_by_name
     
-    # artists.to_json( include: [:songs, covers: {include: [:song]}])
     artists.to_json( include: {songs: {include: {artist: {only: [:name]}}}, covers: {include: {song: {include: {artist: {only: [:name]}}}}}})
   end
 
@@ -65,16 +64,13 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/songs/:id" do
-    # song = Song.find(params[:id]).artists_and_coverers
     song = Song.find(params[:id])
-    # song.artist = Artist.find(song.artist_id)
-    # song.to_json(include: :artist, include: {covers: {include: [:artist]}})
+    
     song.to_json(include: [:artist, covers: {include: [:artist]}])
   end
 
   get "/songs/:id/covers" do
     song = Song.find(params[:id])
-    # covers = Cover.where(song_id: params[:id])
     covers = song.covers
     covers.to_json(include: :artist)
   end
@@ -101,7 +97,6 @@ class ApplicationController < Sinatra::Base
   delete "/songs/:id" do
     song_to_delete = Song.find(params[:id])
     song_to_delete.destroy
-    # song_to_delete.to_json(include: {artist: {include: [:songs]}})
     song_to_delete.to_json(include: {artist: {include: {songs: {include: [:artist]}, covers: {include: {song: {include: [:artist]}}}}}})
   end
 
@@ -116,7 +111,6 @@ class ApplicationController < Sinatra::Base
       artist_id: params[:artist_id],
       performance_link: params[:performance_link]
     )
-    # new_cover.to_json(include: [:artist])
     new_cover.to_json(include: {artist: {include: {songs: {include: [:artist]}, covers: {include: {song: {include: [:artist]}}}}}})
   end
 
@@ -133,7 +127,6 @@ class ApplicationController < Sinatra::Base
     cover_to_delete = Cover.find(params[:id])
     cover_to_delete.destroy
     
-    # cover_to_delete.to_json(include: [:artist])
     cover_to_delete.to_json(include: {artist: {include: {songs: {include: [:artist]}, covers: {include: {song: {include: [:artist]}}}}}})
   end
 
