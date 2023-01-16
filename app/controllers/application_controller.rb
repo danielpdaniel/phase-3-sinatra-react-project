@@ -13,7 +13,8 @@ class ApplicationController < Sinatra::Base
   get "/artists" do
     artists = Artist.all.sort_by_name
     
-    artists.to_json( include: {songs: {include: {artist: {only: [:name]}}}, covers: {include: {song: {include: {artist: {only: [:name]}}}}}})
+    # artists.to_json( include: {songs: {include: {artist: {only: [:name]}}}, covers: {include: {song: {include: {artist: {only: [:name]}}}}}})
+    artists.to_json( include: {songs: {include: {artist: {only: [:name]}, covers: {include: :artist}}}, covers: {include: {song: {include: {artist: {only: [:name]}}}}}})
   end
 
   get"/artists/:id" do
@@ -111,7 +112,10 @@ class ApplicationController < Sinatra::Base
       artist_id: params[:artist_id],
       performance_link: params[:performance_link]
     )
-    new_cover.to_json(include: {artist: {include: {songs: {include: [:artist]}, covers: {include: {song: {include: [:artist]}}}}}})
+    # new_cover.to_json(include: {artist: {include: {songs: {include: [:artist, :covers]}, covers: {include: {song: {include: [:artist]}}}}}})
+    # new_cover.to_json(include: {song: {include: [:covers, artist: {include: [:songs, :covers]}]}})
+    # new_cover.to_json(include: {song: {include: {covers: {include: [:artist]}, artist: {only: [:name]}}}})
+    new_cover.to_json(include: {artist: {include: {covers: {include: {song: {include: {artist: {only: [:name]}}}}}, songs: {include: {artist: {only: [:name]}, covers: {include: [:artist]}} }} }, song: {include: {artist: {include: {songs: {include: {artist: {only: [:name]}} }} }, covers: {include: [:artist]} } }})
   end
 
   patch "/covers/:id" do
@@ -120,14 +124,17 @@ class ApplicationController < Sinatra::Base
       artist_id: params[:artist_id],
       performance_link: params[:performance_link]
     )
-    cover.to_json(include: [:artist])
+    # cover.to_json(include: [:artist])
+    cover.to_json(include: {artist: {include: {covers: {include: {song: {include: {artist: {only: [:name]}}}}}, songs: {include: {artist: {only: [:name]}, covers: {include: [:artist]}} }} }, song: {include: {artist: {include: {songs: {include: {artist: {only: [:name]}} }} }, covers: {include: [:artist]} } }})
+
   end
 
   delete "/covers/:id" do
     cover_to_delete = Cover.find(params[:id])
     cover_to_delete.destroy
     
-    cover_to_delete.to_json(include: {artist: {include: {songs: {include: [:artist]}, covers: {include: {song: {include: [:artist]}}}}}})
+    # cover_to_delete.to_json(include: {artist: {include: {songs: {include: [:artist]}, covers: {include: {song: {include: [:artist]}}}}}})
+    cover_to_delete.to_json(include: {artist: {include: {covers: {include: {song: {include: {artist: {only: [:name]}}}}}, songs: {include: {artist: {only: [:name]}, covers: {include: [:artist]}} }} }, song: {include: {artist: {include: {songs: {include: {artist: {only: [:name]}} }} }, covers: {include: [:artist]} } }})
   end
 
 
