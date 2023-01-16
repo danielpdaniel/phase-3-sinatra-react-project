@@ -56,7 +56,7 @@ class ApplicationController < Sinatra::Base
 
     artist.destroy
 
-    artist.to_json
+    artist.to_json(include: {covers: {include: {artist: {include: {songs: {include: {covers: {include: [:artist]}}}}}}}})
   end
 
   get "/songs" do
@@ -115,7 +115,7 @@ class ApplicationController < Sinatra::Base
     # new_cover.to_json(include: {artist: {include: {songs: {include: [:artist, :covers]}, covers: {include: {song: {include: [:artist]}}}}}})
     # new_cover.to_json(include: {song: {include: [:covers, artist: {include: [:songs, :covers]}]}})
     # new_cover.to_json(include: {song: {include: {covers: {include: [:artist]}, artist: {only: [:name]}}}})
-    new_cover.to_json(include: {artist: {include: {covers: {include: {song: {include: {artist: {only: [:name]}}}}}, songs: {include: {artist: {only: [:name]}, covers: {include: [:artist]}} }} }, song: {include: {artist: {include: {songs: {include: {artist: {only: [:name]}} }} }, covers: {include: [:artist]} } }})
+    new_cover.to_json(include: {artist: {include: {covers: {include: {song: {include: {artist: {only: [:name]}}}}}, songs: {include: {artist: {only: [:name]}, covers: {include: [:artist]}} }} }, song: {include: {artist: {include: {songs: {include: {artist: {only: [:name]}, covers: {include: [:artist]}} }} }, covers: {include: [:artist]} } }})
   end
 
   patch "/covers/:id" do
@@ -134,7 +134,7 @@ class ApplicationController < Sinatra::Base
     cover_to_delete.destroy
     
     # cover_to_delete.to_json(include: {artist: {include: {songs: {include: [:artist]}, covers: {include: {song: {include: [:artist]}}}}}})
-    cover_to_delete.to_json(include: {artist: {include: {covers: {include: {song: {include: {artist: {only: [:name]}}}}}, songs: {include: {artist: {only: [:name]}, covers: {include: [:artist]}} }} }, song: {include: {artist: {include: {songs: {include: {artist: {only: [:name]}} }} }, covers: {include: [:artist]} } }})
+    cover_to_delete.to_json(include: {artist: {include: {covers: {include: {song: {include: {artist: {only: [:name]}}}}}, songs: {include: {artist: {only: [:name]}, covers: {include: [:artist]}} }} }, song: {include: {artist: {include: {songs: {include: {artist: {only: [:name]}, covers: {include: [:artist]}} }} }, covers: {include: [:artist]} } }})
   end
 
 
