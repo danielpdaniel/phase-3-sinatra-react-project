@@ -1,7 +1,7 @@
 class Artist < ActiveRecord::Base
     has_many :songs
     has_many :covers
-    # has_many :songs, through: :covers
+    # has_many :covers, through: :songs
 
     def self.sort_by_name
         self.all.order(name: :asc)
@@ -24,6 +24,10 @@ class Artist < ActiveRecord::Base
             end
         end
         songs_hash_arr
+    end
+
+    def covers_by_artist_id artist_id
+        self.covers.where(artist_id: artist_id)
     end
 
 end

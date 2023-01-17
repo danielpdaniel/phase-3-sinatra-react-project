@@ -53,10 +53,10 @@ class ApplicationController < Sinatra::Base
     artist = Artist.find(params[:id])
     Song.destroy_by(artist_id: params[:id])
     Cover.destroy_by(artist_id: params[:id])
-
+    
     artist.destroy
 
-    artist.to_json(include: {covers: {include: {artist: {include: {songs: {include: {covers: {include: [:artist]}}}}}}}})
+    artist.to_json(include: {songs: {include: [:artist]}, covers: {include: {artist: {include: {songs: {include: {covers: {include: [:artist]}}}}}}}})
   end
 
   get "/songs" do
