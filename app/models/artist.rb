@@ -26,8 +26,4 @@ class Artist < ActiveRecord::Base
         songs_hash_arr
     end
 
-    def covers_by_artist_id artist_id
-        self.covers.where(artist_id: artist_id)
-    end
-
 end
