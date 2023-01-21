@@ -51,8 +51,8 @@ class ApplicationController < Sinatra::Base
 
   delete "/artists/:id" do
     artist = Artist.find(params[:id])
-    Song.destroy_by(artist_id: params[:id])
-    Cover.destroy_by(artist_id: params[:id])
+    # Song.destroy_by(artist_id: params[:id])
+    # Cover.destroy_by(artist_id: params[:id])
     
     artist.destroy
 
@@ -82,7 +82,7 @@ class ApplicationController < Sinatra::Base
       title: params[:title],
       performance_link: params[:performance_link]
     )
-    song.to_json(include: [:artist, covers:{include: [:artist]}])
+    song.to_json(include: {artist: {include: {songs: {include: {artist: {only: [:name]}, covers: {include: [:artist]}}}}}, covers:{include: [:artist]}})
   end
 
   post "/songs" do
@@ -92,7 +92,7 @@ class ApplicationController < Sinatra::Base
       performance_link: params[:performance_link]
     )
 
-    new_song.to_json(include: [:artist])
+    new_song.to_json(include: {artist: {include: {songs: {include: {artist: {only: [:name]}, covers: {include: :artist}}}, covers: {include: {song: {include: {artist: {only: [:name]}}}}}}}})
   end
 
   delete "/songs/:id" do

@@ -1,6 +1,6 @@
 class Song < ActiveRecord::Base
     belongs_to :artist
-    has_many :covers
+    has_many :covers, dependent: :destroy
     # has_many :artists, through: :covers
 
     def artists_and_coverers

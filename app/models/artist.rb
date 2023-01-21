@@ -1,6 +1,6 @@
 class Artist < ActiveRecord::Base
-    has_many :songs
-    has_many :covers
+    has_many :songs, dependent: :destroy
+    has_many :covers, dependent: :destroy
     # has_many :covers, through: :songs
 
     def self.sort_by_name
