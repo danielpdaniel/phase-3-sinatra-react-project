@@ -102,8 +102,8 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/covers" do
-    covers = Cover.all
-    covers.to_json
+    covers = {covers: Cover.all, coverArtists: Cover.all.test_class_method}
+    covers.to_json(methods: [:test_instance_method])
   end
 
   post "/covers" do
